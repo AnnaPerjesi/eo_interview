@@ -11,6 +11,11 @@ import Department from './pages/department.tsx'
 import { MantineProvider } from '@mantine/core';
 import Layout from './components/layout.tsx'
 
+fetch(`${import.meta.env.VITE_SERVER_URL}/WeatherForecast`).then((resp) => resp.json()).then((data) => {
+  console.log(data)
+})
+
+
 
 const router = createBrowserRouter([
   {
@@ -25,9 +30,9 @@ const router = createBrowserRouter([
         Component: DepartmentList,
       },
       {
-        path: "/department",
-        Component: Department
-      },
+        path: "/departments/:id",
+        Component: Department,
+      }
     ]
   }
 ]);

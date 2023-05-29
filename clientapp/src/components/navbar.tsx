@@ -2,10 +2,10 @@ import { Navbar as MantineNavbar } from "@mantine/core";
 
 import React from 'react';
 import {
-    IconGitPullRequest,
+    IconUsers,
     IconAlertCircle,
-    IconMessages,
-    IconDatabase,
+    IconHome,
+    IconUserStar,
 } from '@tabler/icons-react';
 import { ThemeIcon, UnstyledButton, Group, Text } from '@mantine/core';
 import { useNavigate } from "react-router-dom";
@@ -46,10 +46,10 @@ function MainLink({ icon, color, label, onClick }: MainLinkProps) {
 }
 
 const data = [
-    { icon: <IconGitPullRequest size="1rem" />, color: 'blue', label: 'Home', path: "/" },
-    { icon: <IconMessages size="1rem" />, color: 'violet', label: 'Employes', path: "/employes" },
+    { icon: <IconHome size="1rem" />, color: 'blue', label: 'Home', path: "/" },
+    { icon: <IconUsers size="1rem" />, color: 'violet', label: 'Employees', path: "/employees" },
     { icon: <IconAlertCircle size="1rem" />, color: 'teal', label: 'Departments', path: "/departments" },
-    { icon: <IconDatabase size="1rem" />, color: 'grape', label: 'Supervisors', path: "/supervisors" },
+    { icon: <IconUserStar size="1rem" />, color: 'grape', label: 'Supervisors', path: "/supervisors" },
 ];
 
 function Navbar() {

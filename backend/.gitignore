@@ -1,0 +1,169 @@
+# .NET and Visual Studio files
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.exe.config
+*.user
+*.suo
+*.cache
+*.log
+*.vspscc
+.vs/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Tt]est[Rr]esults/
+[Tt]est[Rr]esults[Bb]uild/
+
+# NuGet packages
+*.nupkg
+packages/
+# The old project format
+*.xproj
+.project.json
+.project.pbxproj
+*.userprefs
+*.plist
+*.xib
+*.storyboard
+
+# .NET Build Output
+bin/
+obj/
+
+# .NET Core Tools
+.nuget/
+dotnet-*
+.project.json
+.project.lock.json
+*.user
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio
+*.suo
+*.userprefs
+*.csproj.user
+*.xproj.user
+*.swp
+
+# NuGet Packages
+*.nupkg
+*.pfx
+*.snk
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+AnyCPU/
+*.exe
+*.pdb
+*.dll
+*.manifest
+*.cache
+*.log
+*.vspx
+*.log
+*.zip
+*.rar
+*.7z
+*.mp4
+*.avi
+*.flv
+*.wmv
+*.mov
+*.mp3
+*.wav
+*.mid
+*.gif
+*.png
+*.bmp
+*.ico
+*.jar
+*.csv
+*.xlsx
+*.xls
+*.mdb
+*.sql
+*.accdb
+*.obj
+*.jar
+*.apk
+*.dex
+*.class
+*.smali
+*.smt2
+*.smt
+*.idb
+*.sln.docstates
+
+.vs 
+
+# Unity specific
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Rider
+.idea/
+*.sln.iml
+*.iml
+
+# User-specific files
+*.user
+*.userprefs
+*.usertasks
+*.suo
+*.sln.docstates
+*.userosscache
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Oo]bj/
+[Bb]in/
+[Rr]elease*/
+[Dd]ebug*/
+*.pdb
+*.exe
+*.dll
+*.apk
+*.exe.config
+*.deploy
+*.msix
+*.msixbundle
+*.appx
+*.appxbundle
+*.appxrecipe
+*.appxsym
+*.appxupload
+
+# Publish Artifact Web Config
+*.PrecompiledWeb.config
+
+# Windows IoT
+AppPackages/
+
+# StyleCop
+StyleCopReport.xml
+
+# Roslyn Analyzer Rulesets
+*.ruleset

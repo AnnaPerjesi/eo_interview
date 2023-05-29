@@ -1,5 +1,5 @@
 function Department() {
-    return <div>Department</div>
+    return <div></div>
 }
 
-export default Department;
+export default Department
