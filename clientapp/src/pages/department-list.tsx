@@ -1,4 +1,4 @@
-import { Button, Modal, Table, TextInput, rem } from "@mantine/core";
+import { Button, Group, Modal, Table, TextInput, rem } from "@mantine/core";
 import React from "react";
 import { DepartmentListStore } from "../core/stores/DepartmentListStore";
 import { observer } from "mobx-react";
@@ -63,8 +63,8 @@ class DepartmentList extends React.Component {
               title="Modal Title"
             >
               <TextInput
-                label="Input"
-                placeholder="Enter something..."
+                label="Name"
+                placeholder="Enter department name..."
                 value={this.departmentListStore.editingDepartment.name}
                 onChange={(event) =>
                   this.departmentListStore.onChange(event.target.value, "name")
@@ -77,18 +77,20 @@ class DepartmentList extends React.Component {
                   marginTop: "1rem",
                 }}
               >
-                <Button
-                  onClick={() => this.departmentListStore.clickRow(-1)}
-                  variant="outline"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={() => this.departmentListStore.saveDepartment()}
-                  variant="outline"
-                >
-                  Save
-                </Button>
+                <Group>
+                  <Button
+                    onClick={() => this.departmentListStore.clickRow(0)}
+                    variant="outline"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => this.departmentListStore.saveDepartment()}
+                    variant="outline"
+                  >
+                    Save
+                  </Button>
+                </Group>
               </div>
             </Modal>
           </div>

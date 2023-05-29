@@ -1,7 +1,7 @@
 import { flow, makeAutoObservable } from "mobx";
 import DepatmentService from "../services/DepartmentService";
 import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 export class DepartmentListStore {
   isLoading: boolean = false;
@@ -39,6 +39,20 @@ export class DepartmentListStore {
    * If there is no selected department, then add new one
    */
   *saveDepartment(): any {
+    if (
+      this.getDepartment.name?.trim() === "" ||
+      this.getDepartment.name === null
+    ) {
+      notifications.show({
+        title: "Save was unsuccessful",
+        message: "Required fields are missing",
+        color: "red",
+        radius: "md",
+        icon: <IconX />,
+      });
+      return;
+    }
+
     this.isLoading = true;
     if (this.editingDepartment.id === -1) {
       yield DepatmentService.addDepartment(this.editingDepartment);
