@@ -67,7 +67,7 @@ class DepartmentList extends React.Component {
                 placeholder="Enter something..."
                 value={this.departmentListStore.editingDepartment.name}
                 onChange={(event) =>
-                  this.departmentListStore.onChange(event.target.value)
+                  this.departmentListStore.onChange(event.target.value, "name")
                 }
               />
               <div
@@ -84,7 +84,7 @@ class DepartmentList extends React.Component {
                   Cancel
                 </Button>
                 <Button
-                  onClick={() => this.departmentListStore.addDepartment()}
+                  onClick={() => this.departmentListStore.saveDepartment()}
                   variant="outline"
                 >
                   Save

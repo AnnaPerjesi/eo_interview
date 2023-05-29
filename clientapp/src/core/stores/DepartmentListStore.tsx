@@ -13,10 +13,13 @@ export class DepartmentListStore {
   constructor() {
     makeAutoObservable(this, {
       loadDepartments: flow,
-      addDepartment: flow,
+      saveDepartment: flow,
     });
   }
 
+  /**
+   * load all the departments
+   */
   *loadDepartments(): any {
     this.isLoading = true;
     const data = yield DepatmentService.getAll();
@@ -30,7 +33,11 @@ export class DepartmentListStore {
     return this.departments;
   }
 
-  *addDepartment(): any {
+  /**
+   * If there is selected department, then only edit
+   * If there is no selected department, then add new one
+   */
+  *saveDepartment(): any {
     this.isLoading = true;
     if (this.editingDepartment.id === -1) {
       yield DepatmentService.addDepartment(this.editingDepartment);
@@ -39,6 +46,7 @@ export class DepartmentListStore {
     }
     yield this.loadDepartments();
 
+    //create notification
     notifications.show({
       title: "Add department",
       message: "Save was successful",
@@ -51,6 +59,10 @@ export class DepartmentListStore {
     this.isLoading = false;
   }
 
+  /**
+   * delete selected department
+   * @param id
+   */
   *delete(id: number): any {
     this.isLoading = true;
 
@@ -60,6 +72,9 @@ export class DepartmentListStore {
     this.isLoading = false;
   }
 
+  /**
+   * Only send as much data to the backend as needed
+   */
   get getDepartment() {
     return {
       id: this.editingDepartment?.id,
@@ -67,10 +82,17 @@ export class DepartmentListStore {
     };
   }
 
+  /**
+   * If id = 0 then hide Modal and clear editDepartment
+   * If id = -1 then it is a new department, appear modal
+   * If id > 0 then it is an  existing department, appear modal
+   * @param id
+   */
   clickRow(id: number) {
     this.clickedRowNumber = id;
 
     if (id === 0) {
+      //clear
       this.editingDepartment = null;
     } else if (id === -1) {
       //new row
@@ -79,14 +101,19 @@ export class DepartmentListStore {
         name: "",
       };
     } else {
+      //find existing one
       this.editingDepartment = this.departments.find((X) => X.id === id);
     }
   }
 
-  onChange(value: any) {
+  /**
+   * Edit property via given key
+   * @param value
+   */
+  onChange(value: any, key: any) {
     this.editingDepartment = {
       ...this.editingDepartment,
-      name: value,
+      [key]: value,
     };
   }
 }
