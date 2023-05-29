@@ -45,5 +45,35 @@ namespace EO_interview.Controllers
 
             return dep;
         }
+
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            _departmentService.Delete(_dbContext, id);
+        }
+
+        [HttpPut]
+        public ActionResult<Department> Update([FromBody] DepartmentModel entity)
+        {
+            try
+            {
+                Department dep = _departmentService.Update(_dbContext, entity);
+                return dep;
+            }
+            catch (Exception ex)
+            {
+
+                var errorResponse = new
+                {
+                    Message = "An error occurred during the update.",
+                    Error = ex.Message
+                };
+
+                // Return the error response with an appropriate status code
+                return BadRequest(errorResponse);
+            }
+        }
+
+
     }
 }

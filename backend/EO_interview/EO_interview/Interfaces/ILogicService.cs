@@ -9,7 +9,7 @@ namespace EO_interview.Interfaces
         TEntity GetById(DBContext context, int id);
         IQueryable<TEntity> Query(DBContext context, Expression<Func<TEntity, bool>> predicate);
         TEntity Add(DBContext context, TModel entity);
-        TEntity Update(DBContext context, TEntity entity);
-        void Delete(DBContext context, TEntity entity);
+        TEntity Update(DBContext context, TModel entity);
+        void Delete(DBContext context, int id);
     }
 }

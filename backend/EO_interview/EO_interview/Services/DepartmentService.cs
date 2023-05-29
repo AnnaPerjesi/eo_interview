@@ -18,9 +18,12 @@ namespace EO_interview.Services
             return department;
         }
 
-        public void Delete(DBContext context, Department entity)
+        public void Delete(DBContext context, int id)
         {
-            throw new NotImplementedException();
+            Department department = context.Departments.FirstOrDefault(department => department.Id == id);
+            context.Departments.Remove(department);
+
+            context.SaveChanges();
         }
 
         public Department GetById(DBContext context, int id)
@@ -33,9 +36,16 @@ namespace EO_interview.Services
             return context.Departments.Where(predicate);
         }
 
-        public Department Update(DBContext context, Department entity)
+        public Department Update(DBContext context, DepartmentModel entity)
         {
-            throw new NotImplementedException();
+            Department department = context.Departments.FirstOrDefault(dep => dep.Id == entity.Id);
+
+            department.Name = entity.Name;
+
+            context.SaveChanges();
+
+            return department;
+
         }
     }
 }
