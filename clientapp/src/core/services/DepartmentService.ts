@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_SERVER_URL;
 
-export class EmployeeService {
+class DepatmentService {
 
     async getAll(): Promise<IDepartment[]> {
         const response = await fetch(`${API_URL}/Department/GetAll`)
@@ -51,3 +51,5 @@ export class EmployeeService {
         })
     }
 }
+
+export default new DepatmentService();
