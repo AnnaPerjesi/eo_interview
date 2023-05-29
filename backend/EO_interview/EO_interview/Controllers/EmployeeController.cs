@@ -38,6 +38,14 @@ namespace EO_interview.Controllers
         }
 
         [HttpGet]
+        public IQueryable<Employee> GetAllSupervisors()
+        {
+            IQueryable<Employee> emps = _employeeService.Query(_dbContext, emp => emp.IsSupervisor == 1);
+
+            return emps;
+        }
+
+        [HttpGet]
         public Employee GetById(int id)
         {
             Employee emp = _employeeService.GetById(_dbContext, id);

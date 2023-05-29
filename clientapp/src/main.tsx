@@ -26,6 +26,10 @@ const router = createBrowserRouter([
         path: "/employees",
         Component: EmployeeList,
       },
+      {
+        path: "/supervisors",
+        element: <EmployeeList supervisor={true} />,
+      },
     ],
   },
 ]);

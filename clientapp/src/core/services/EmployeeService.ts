@@ -19,6 +19,14 @@ class EmployeeService {
     return data;
   }
 
+  async getAllSupervisors(): Promise<IEmployee[]> {
+    const response = await fetch(`${API_URL}/Employee/GetAllSupervisors`);
+
+    const data = await response.json();
+
+    return data;
+  }
+
   async getById(id: number): Promise<IEmployee> {
     const response = await fetch(`${API_URL}/Employee/GetById?id=${id}`);
 

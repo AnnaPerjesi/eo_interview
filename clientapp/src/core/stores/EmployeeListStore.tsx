@@ -1,7 +1,7 @@
 import { flow, makeAutoObservable } from "mobx";
 import EmployeeService from "../services/EmployeeService";
 import { notifications } from "@mantine/notifications";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 import DepartmentService from "../services/DepartmentService";
 import { SelectItem } from "@mantine/core";
 
@@ -13,8 +13,9 @@ export class EmployeeListStore {
 
   editingEmployee: IEmployee = null;
   clickedRowNumber: number = 0;
+  supervisor: boolean = false;
 
-  constructor() {
+  constructor(supervisor_: boolean) {
     makeAutoObservable(this, {
       loadEmployees: flow,
       saveEmployee: flow,
@@ -22,6 +23,8 @@ export class EmployeeListStore {
       loadDepartments: flow,
       onSupervisorSearchChange: flow,
     });
+
+    this.supervisor = supervisor_;
   }
 
   get getSupervisors(): SelectItem[] {
@@ -39,13 +42,20 @@ export class EmployeeListStore {
 
   *loadEmployees(): any {
     this.isLoading = true;
-    const data = yield EmployeeService.getAll();
+
+    let data: IEmployee[] = [];
+
+    if (this.supervisor) {
+      data = yield EmployeeService.getAllSupervisors();
+    } else {
+      data = yield EmployeeService.getAll();
+    }
+
     if (data) {
       this.employees = [...data];
     }
-    this.isLoading = false;
 
-    console.log(this.employees);
+    this.isLoading = false;
   }
 
   *loadDepartments(): any {
@@ -64,6 +74,27 @@ export class EmployeeListStore {
   }
 
   *saveEmployee(): any {
+    const requiredFields = ["name", "position", "departmentId"];
+
+    let validationErrors = [];
+
+    for (let i = 0; i < requiredFields.length; i++) {
+      if (!this.getEmployee[requiredFields[i] as keyof IEmployee]) {
+        validationErrors.push(requiredFields[i]);
+      }
+    }
+
+    if (validationErrors.length > 0) {
+      notifications.show({
+        title: "Save was unsuccessful",
+        message: "Required fields are missing",
+        color: "red",
+        radius: "md",
+        icon: <IconX />,
+      });
+      return;
+    }
+
     this.isLoading = true;
 
     if (this.editingEmployee.id === -1) {
@@ -145,7 +176,7 @@ export class EmployeeListStore {
         password: "",
         supervisorId: -1,
         departmentId: -1,
-        isSupervisor: 0,
+        isSupervisor: this.supervisor ? 1 : 0,
         department: null,
         inverseSupervisor: [],
         supervisor: null,

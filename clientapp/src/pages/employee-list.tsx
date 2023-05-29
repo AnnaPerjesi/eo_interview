@@ -14,17 +14,33 @@ import { EmployeeListStore } from "../core/stores/EmployeeListStore";
 import { Edit, Trash } from "tabler-icons-react";
 import { IconCirclePlus } from "@tabler/icons-react";
 
-class EmployeeList extends React.Component {
+interface IEmployeeListProps {
+  supervisor?: boolean;
+}
+
+class EmployeeList extends React.Component<IEmployeeListProps> {
   private employeeListStore: EmployeeListStore;
 
-  constructor(props: any) {
+  constructor(props: IEmployeeListProps) {
     super(props);
-    this.employeeListStore = new EmployeeListStore();
+    this.employeeListStore = new EmployeeListStore(this.props.supervisor);
   }
 
   componentDidMount(): void {
     this.employeeListStore.loadEmployees();
     this.employeeListStore.loadDepartments();
+  }
+
+  componentDidUpdate(
+    prevProps: Readonly<IEmployeeListProps>,
+    prevState: Readonly<{}>,
+    snapshot?: any
+  ): void {
+    if (prevProps.supervisor != this.props.supervisor) {
+      this.employeeListStore.supervisor = this.props.supervisor;
+      this.employeeListStore.loadEmployees();
+      this.employeeListStore.loadDepartments();
+    }
   }
 
   render() {
@@ -86,6 +102,7 @@ class EmployeeList extends React.Component {
                 onChange={(event) =>
                   this.employeeListStore.onChange(event.target.value, "name")
                 }
+                required
               />
 
               <TextInput
@@ -98,6 +115,7 @@ class EmployeeList extends React.Component {
                     "position"
                   )
                 }
+                required
               />
 
               <TextInput
@@ -152,6 +170,7 @@ class EmployeeList extends React.Component {
 
               <Select
                 label="Department"
+                required
                 placeholder="Pick one"
                 value={this.employeeListStore.editingEmployee?.departmentId?.toString()}
                 data={this.employeeListStore.getDepartmentOptions as any}
