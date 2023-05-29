@@ -6,13 +6,15 @@ namespace EO_interview.Database;
 
 public partial class DBContext : DbContext
 {
+    private readonly IConfiguration _configuration;
     public DBContext()
     {
     }
 
-    public DBContext(DbContextOptions<DBContext> options)
+    public DBContext(DbContextOptions<DBContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
     public virtual DbSet<Department> Departments { get; set; }
@@ -20,8 +22,10 @@ public partial class DBContext : DbContext
     public virtual DbSet<Employee> Employees { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;port=3306;database=eo_interview;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"));
+    {
+        string connectionString = _configuration.GetConnectionString("DefaultConnection");
+        optionsBuilder.UseMySql(connectionString, ServerVersion.Parse("8.0.31-mysql"));
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
