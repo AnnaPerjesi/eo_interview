@@ -22,8 +22,6 @@ namespace EO_interview.Models
 
         public sbyte? IsSupervisor { get; set; }
 
-        public virtual Department? Department { get; set; }
 
-        public virtual Employee? Supervisor { get; set; }
     }
 }

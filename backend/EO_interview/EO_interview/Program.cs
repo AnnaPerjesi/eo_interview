@@ -35,6 +35,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddSingleton<ILogicService<Department, DepartmentModel>, DepartmentService>();
+builder.Services.AddSingleton<ILogicService<Employee, EmployeeModel>, EmployeeService>();
 
 
 var app = builder.Build();
