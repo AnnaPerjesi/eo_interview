@@ -100,7 +100,15 @@ export class EmployeeListStore {
     if (this.editingEmployee.id === -1) {
       yield EmployeeService.addEmployee({
         ...this.editingEmployee,
-        id: null,
+        id: 0,
+        supervisorId:
+          this.editingEmployee.supervisorId > 0
+            ? this.editingEmployee.supervisorId
+            : null,
+        departmentId:
+          this.editingEmployee.departmentId > 0
+            ? this.editingEmployee.departmentId
+            : null,
       });
     } else {
       yield EmployeeService.update(this.getEmployee);

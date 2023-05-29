@@ -16,23 +16,24 @@ namespace EO_interview.Services
             employee.UserName = entity.UserName;
             employee.Password = entity.Password;
             employee.Position = entity.Position;
-            employee.SupervisorId = entity.SupervisorId;
-            employee.DepartmentId = entity.DepartmentId;
+
+            if(entity.SupervisorId.HasValue)
+            {
+                employee.SupervisorId = entity.SupervisorId;
+            }
+
+            if(entity.DepartmentId.HasValue)
+            {
+                employee.DepartmentId = entity.DepartmentId;
+            }
+            
             employee.IsSupervisor = entity.IsSupervisor;
 
             context.Add(employee);
 
             context.SaveChanges();
 
-           /* if (entity.SupervisorId.HasValue)
-            {
-                employee.Supervisor = context.Employees.Find(entity.SupervisorId.Value);
-            }
-
-            if (entity.DepartmentId.HasValue)
-            {
-                employee.Department = context.Departments.Find(entity.DepartmentId.Value);
-            }*/
+          
 
             return employee;
 

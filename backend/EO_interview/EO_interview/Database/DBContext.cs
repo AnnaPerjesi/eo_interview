@@ -77,6 +77,7 @@ public partial class DBContext : DbContext
 
             entity.HasOne(d => d.Supervisor).WithMany(p => p.InverseSupervisor)
                 .HasForeignKey(d => d.SupervisorId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Employee_supercisorId");
         });
 

@@ -63,7 +63,7 @@ class EmployeeList extends React.Component<IEmployeeListProps> {
             strokeWidth={2}
             color={"red"}
             cursor={"pointer"}
-            onClick={() => null}
+            onClick={() => this.employeeListStore.delete(element.id)}
           />
         </td>
         <td>{element.name}</td>
@@ -80,7 +80,7 @@ class EmployeeList extends React.Component<IEmployeeListProps> {
             onClick={() => this.employeeListStore.clickRow(-1)}
             leftIcon={<IconCirclePlus size={rem(18)} />}
           >
-            Add department
+            {this.props.supervisor ? "Add supervisor" : "Add employee"}
           </Button>
         </div>
 
@@ -166,6 +166,7 @@ class EmployeeList extends React.Component<IEmployeeListProps> {
                     "isSupervisor"
                   )
                 }
+                disabled={this.props.supervisor}
               />
 
               <Select
