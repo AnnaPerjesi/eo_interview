@@ -2,7 +2,7 @@ import { Button, Modal, Table, TextInput, rem } from "@mantine/core";
 import React from "react";
 import { DepartmentListStore } from "../core/stores/DepartmentListStore";
 import { observer } from "mobx-react";
-import { IconBrandTwitter } from "@tabler/icons-react";
+import { IconBrandTwitter, IconCirclePlus } from "@tabler/icons-react";
 import { Edit, Trash } from "tabler-icons-react";
 
 class DepartmentList extends React.Component {
@@ -32,7 +32,13 @@ class DepartmentList extends React.Component {
           />
         </td>
         <td>
-          <Trash size={24} strokeWidth={2} color={"red"} />
+          <Trash
+            size={24}
+            strokeWidth={2}
+            color={"red"}
+            cursor={"pointer"}
+            onClick={() => this.departmentListStore.delete(element.id)}
+          />
         </td>
         <td>{element.name}</td>
       </tr>
@@ -43,7 +49,7 @@ class DepartmentList extends React.Component {
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             onClick={() => this.departmentListStore.clickRow(-1)}
-            leftIcon={<IconBrandTwitter size={rem(18)} />}
+            leftIcon={<IconCirclePlus size={rem(18)} />}
           >
             Add department
           </Button>

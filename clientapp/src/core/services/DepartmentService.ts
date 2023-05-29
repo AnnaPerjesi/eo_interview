@@ -43,7 +43,7 @@ class DepatmentService {
 
   async delete(id: number): Promise<any> {
     await fetch(`${API_URL}/Department/Delete?id=${id}`, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },

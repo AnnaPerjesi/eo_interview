@@ -8,6 +8,7 @@ import Department from "./pages/department.tsx";
 import { MantineProvider } from "@mantine/core";
 import Layout from "./components/layout.tsx";
 import EmployeeList from "./pages/employee-list.tsx";
+import { Notifications } from "@mantine/notifications";
 
 fetch(`${import.meta.env.VITE_SERVER_URL}/WeatherForecast`)
   .then((resp) => resp.json())
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <MantineProvider withGlobalStyles withNormalizeCSS>
+      <Notifications />
       <RouterProvider router={router} />
     </MantineProvider>
     ,

@@ -1,5 +1,7 @@
 import { flow, makeAutoObservable } from "mobx";
 import DepatmentService from "../services/DepartmentService";
+import { notifications } from "@mantine/notifications";
+import { IconCheck } from "@tabler/icons-react";
 
 export class DepartmentListStore {
   isLoading: boolean = false;
@@ -37,7 +39,24 @@ export class DepartmentListStore {
     }
     yield this.loadDepartments();
 
+    notifications.show({
+      title: "Add department",
+      message: "Save was successful",
+      color: "green",
+      radius: "md",
+      icon: <IconCheck />,
+    });
+
     this.clickRow(0);
+    this.isLoading = false;
+  }
+
+  *delete(id: number): any {
+    this.isLoading = true;
+
+    yield DepatmentService.delete(id);
+    yield this.loadDepartments();
+
     this.isLoading = false;
   }
 
