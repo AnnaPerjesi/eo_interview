@@ -1,6 +1,7 @@
 ﻿using EO_interview.Database;
 using EO_interview.Interfaces;
 using EO_interview.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace EO_interview.Services
@@ -56,7 +57,7 @@ namespace EO_interview.Services
 
         public IQueryable<Employee> Query(DBContext context, Expression<Func<Employee, bool>> predicate)
         {
-            return context.Employees.Where(predicate);
+            return context.Employees.Include(e => e.Department).Where(predicate);
         }
 
         public Employee Update(DBContext context, EmployeeModel entity)

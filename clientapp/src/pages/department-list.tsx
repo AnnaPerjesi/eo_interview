@@ -100,7 +100,6 @@ class DepartmentList extends React.Component {
               <th></th>
               <th></th>
               <th>Name</th>
-              <th>Shortcut</th>
             </tr>
           </thead>
 
