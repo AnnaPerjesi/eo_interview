@@ -3,6 +3,8 @@ using EO_interview.Interfaces;
 using EO_interview.Models;
 using EO_interview.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,22 @@ builder.Services.AddCors(options =>
                .AllowAnyMethod();
     });
 });
+
+builder.Services.AddControllers(options =>
+{
+
+})
+            .AddJsonOptions(options =>
+            {
+
+                options.JsonSerializerOptions.MaxDepth = 10;
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                options.JsonSerializerOptions.WriteIndented = true;
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            });
+
+
 
 builder.Services.AddSingleton<ILogicService<Department, DepartmentModel>, DepartmentService>();
 builder.Services.AddSingleton<ILogicService<Employee, EmployeeModel>, EmployeeService>();

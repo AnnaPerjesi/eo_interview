@@ -73,17 +73,6 @@ namespace EO_interview.Services
 
             context.SaveChanges();
 
-
-            if (employee.SupervisorId.HasValue)
-            {
-                employee.Supervisor = context.Employees.Find(employee.SupervisorId.Value);
-            }
-
-            if (employee.DepartmentId.HasValue)
-            {
-                employee.Department = context.Departments.Find(employee.DepartmentId.Value);
-            }
-
             return employee;
         }
     }

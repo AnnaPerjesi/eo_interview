@@ -1,4 +1,13 @@
-import { Button, Checkbox, Modal, Table, TextInput, rem } from "@mantine/core";
+import {
+  Button,
+  Checkbox,
+  Group,
+  Modal,
+  Select,
+  Table,
+  TextInput,
+  rem,
+} from "@mantine/core";
 import React from "react";
 import { observer } from "mobx-react";
 import { EmployeeListStore } from "../core/stores/EmployeeListStore";
@@ -15,6 +24,7 @@ class EmployeeList extends React.Component {
 
   componentDidMount(): void {
     this.employeeListStore.loadEmployees();
+    this.employeeListStore.loadDepartments();
   }
 
   render() {
@@ -24,7 +34,7 @@ class EmployeeList extends React.Component {
       <tr key={element.id}>
         <td>
           <Edit
-            onClick={() => null}
+            onClick={() => this.employeeListStore.clickRow(element.id)}
             size={24}
             strokeWidth={2}
             color={"green"}
@@ -129,12 +139,38 @@ class EmployeeList extends React.Component {
               />
 
               <Checkbox
+                style={{ marginTop: "1rem" }}
+                label="Is supervisor?"
                 checked={!!this.employeeListStore.editingEmployee?.isSupervisor}
                 onChange={(event) =>
                   this.employeeListStore.onChange(
                     event.currentTarget.checked ? 1 : 0,
                     "isSupervisor"
                   )
+                }
+              />
+
+              <Select
+                label="Department"
+                placeholder="Pick one"
+                value={this.employeeListStore.editingEmployee?.departmentId?.toString()}
+                data={this.employeeListStore.getDepartmentOptions as any}
+                onChange={(value) =>
+                  this.employeeListStore.onChange(value, "departmentId")
+                }
+              />
+
+              <Select
+                label="Supervisor"
+                placeholder="Pick one"
+                value={this.employeeListStore.editingEmployee?.supervisorId?.toString()}
+                data={this.employeeListStore.getSupervisors}
+                searchable
+                onSearchChange={(value) =>
+                  this.employeeListStore.onSupervisorSearchChange(value)
+                }
+                onChange={(value) =>
+                  this.employeeListStore.onChange(value, "supervisorId")
                 }
               />
 
@@ -145,18 +181,20 @@ class EmployeeList extends React.Component {
                   marginTop: "1rem",
                 }}
               >
-                <Button
-                  onClick={() => this.employeeListStore.clickRow(-1)}
-                  variant="outline"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={() => this.employeeListStore.saveEmployee()}
-                  variant="outline"
-                >
-                  Save
-                </Button>
+                <Group>
+                  <Button
+                    onClick={() => this.employeeListStore.clickRow(0)}
+                    variant="outline"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => this.employeeListStore.saveEmployee()}
+                    variant="filled"
+                  >
+                    Save
+                  </Button>
+                </Group>
               </div>
             </Modal>
           </div>

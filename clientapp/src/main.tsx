@@ -10,12 +10,6 @@ import Layout from "./components/layout.tsx";
 import EmployeeList from "./pages/employee-list.tsx";
 import { Notifications } from "@mantine/notifications";
 
-fetch(`${import.meta.env.VITE_SERVER_URL}/WeatherForecast`)
-  .then((resp) => resp.json())
-  .then((data) => {
-    console.log(data);
-  });
-
 const router = createBrowserRouter([
   {
     Component: Layout,
@@ -27,10 +21,6 @@ const router = createBrowserRouter([
       {
         path: "/departments",
         Component: DepartmentList,
-      },
-      {
-        path: "/departments/:id",
-        Component: Department,
       },
       {
         path: "/employees",

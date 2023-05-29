@@ -9,6 +9,16 @@ class EmployeeService {
     return data;
   }
 
+  async getAllByName(name: string = ""): Promise<IEmployee[]> {
+    const response = await fetch(
+      `${API_URL}/Employee/GetAllByName?name=${name}`
+    );
+
+    const data = await response.json();
+
+    return data;
+  }
+
   async getById(id: number): Promise<IEmployee> {
     const response = await fetch(`${API_URL}/Employee/GetById?id=${id}`);
 
@@ -30,8 +40,8 @@ class EmployeeService {
   }
 
   async update(employee: IEmployee): Promise<any> {
-    const response = await fetch(`${API_URL}/Employee/AddEmployee`, {
-      method: "POST",
+    const response = await fetch(`${API_URL}/Employee/Update`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,7 +53,7 @@ class EmployeeService {
 
   async delete(id: number): Promise<any> {
     await fetch(`${API_URL}/Employee/Delete?id=${id}`, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },

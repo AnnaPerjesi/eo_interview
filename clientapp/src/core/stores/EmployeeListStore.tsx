@@ -2,10 +2,14 @@ import { flow, makeAutoObservable } from "mobx";
 import EmployeeService from "../services/EmployeeService";
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
+import DepartmentService from "../services/DepartmentService";
+import { SelectItem } from "@mantine/core";
 
 export class EmployeeListStore {
   isLoading: boolean = false;
   employees: IEmployee[] = [];
+  departments: IDepartment[] = [];
+  supervisors: IEmployee[] = [];
 
   editingEmployee: IEmployee = null;
   clickedRowNumber: number = 0;
@@ -15,7 +19,22 @@ export class EmployeeListStore {
       loadEmployees: flow,
       saveEmployee: flow,
       delete: flow,
+      loadDepartments: flow,
+      onSupervisorSearchChange: flow,
     });
+  }
+
+  get getSupervisors(): SelectItem[] {
+    return this.supervisors.map((s) => {
+      return { value: s.id.toString(), label: s.name };
+    });
+  }
+
+  *onSupervisorSearchChange(name: string) {
+    const data: IEmployee[] = yield EmployeeService.getAllByName(name);
+    if (data) {
+      this.supervisors = [...data];
+    }
   }
 
   *loadEmployees(): any {
@@ -29,11 +48,29 @@ export class EmployeeListStore {
     console.log(this.employees);
   }
 
+  *loadDepartments(): any {
+    this.isLoading = true;
+    const data = yield DepartmentService.getAll();
+    if (data) {
+      this.departments = [...data];
+    }
+    this.isLoading = false;
+  }
+
+  get getDepartmentOptions() {
+    return this.departments.map((d) => {
+      return { value: d.id.toString(), label: d.name };
+    });
+  }
+
   *saveEmployee(): any {
     this.isLoading = true;
+
     if (this.editingEmployee.id === -1) {
-      console.log(this.editingEmployee);
-      // yield EmployeeService.addEmployee(this.editingEmployee);
+      yield EmployeeService.addEmployee({
+        ...this.editingEmployee,
+        id: null,
+      });
     } else {
       yield EmployeeService.update(this.getEmployee);
     }
@@ -115,7 +152,7 @@ export class EmployeeListStore {
       };
     } else {
       //find existing one
-      this.editingEmployee = this.getEmployees.find((X) => X.id === id);
+      this.editingEmployee = this.employees.find((X) => X.id === id);
     }
   }
 

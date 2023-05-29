@@ -30,6 +30,14 @@ namespace EO_interview.Controllers
         }
 
         [HttpGet]
+        public IQueryable<Employee> GetAllByName([FromQuery] string? name)
+        {
+            IQueryable<Employee> emps = _employeeService.Query(_dbContext, emp => !string.IsNullOrWhiteSpace(name) ? emp.Name.Contains(name): true);
+
+            return emps;
+        }
+
+        [HttpGet]
         public Employee GetById(int id)
         {
             Employee emp = _employeeService.GetById(_dbContext, id);
