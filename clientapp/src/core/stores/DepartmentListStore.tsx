@@ -14,6 +14,7 @@ export class DepartmentListStore {
     makeAutoObservable(this, {
       loadDepartments: flow,
       saveDepartment: flow,
+      delete: flow,
     });
   }
 
@@ -48,7 +49,7 @@ export class DepartmentListStore {
 
     //create notification
     notifications.show({
-      title: "Add department",
+      title: "Save department",
       message: "Save was successful",
       color: "green",
       radius: "md",
@@ -102,7 +103,7 @@ export class DepartmentListStore {
       };
     } else {
       //find existing one
-      this.editingDepartment = this.departments.find((X) => X.id === id);
+      this.editingDepartment = this.getDepartments.find((X) => X.id === id);
     }
   }
 
